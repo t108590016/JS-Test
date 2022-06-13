@@ -15,7 +15,7 @@ function countEmployeesNumberByFactory() {
       });
       return (factoriesNumber);
 }
-console.log(getEmployeesNumberByFactory());
+console.log(countEmployeesNumberByFactory());
 
 console.log("2.");
 /* 2. Count Factories Number by Employee // => [ {employee: 'John', count: 2}, ... ] */
@@ -44,7 +44,7 @@ function countFactoriesNumberByEmployee() {
       });
       return factoriesNumber;
 }
-console.log(getFactoriesNumberByEmployee());
+console.log(countFactoriesNumberByEmployee());
 
 console.log("3.");
 /* 3. Order employees list by alphabetical order // =>   { name: "BR2", employees: ["Jessie", "John", "Karen"] }*/
