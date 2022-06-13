@@ -40,7 +40,6 @@ function getFactoriesNumberByEmployee() {
                         var object = {name: value, count: 1};
                         factoriesNumber.push(object);
                   }
-
             });
       });
       return factoriesNumber;
