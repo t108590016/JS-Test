@@ -7,7 +7,7 @@ const factories = [
     
 console.log("1.");
 /* 1. Count Employees Number by Factory // => [ {name: 'BR1', count: 4}, ... ] */
-function getEmployeesNumberByFactory() {
+function countEmployeesNumberByFactory() {
       var factoriesNumber = [];
       factories.forEach(element => {
             var object = {name: element['name'], count: element['employees'].length};
@@ -19,7 +19,7 @@ console.log(getEmployeesNumberByFactory());
 
 console.log("2.");
 /* 2. Count Factories Number by Employee // => [ {employee: 'John', count: 2}, ... ] */
-function getFactoriesNumberByEmployee() {
+function countFactoriesNumberByEmployee() {
       var factoriesNumber = [];
       var found = 0;
       factories.forEach(element => {
