@@ -33,13 +33,13 @@ function countFactoriesNumberByEmployee() {
                   沒有 => 建一個object，推到factoriesNumber裡面
                   */
                   factoriesNumber.forEach(employees => {
-                        if (value == employees?.name) {
+                        if (value == employees.name) {
                               employees['count']++;
                               found = 1;
                         }
                   });
                   if (found == 0) {
-                        var object = {name: value, count: 1};
+                        var object = {employee: value, count: 1};
                         factoriesNumber.push(object);
                   }
             });
