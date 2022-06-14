@@ -7,6 +7,7 @@ const factories = [
     
 console.log("1.");
 /* 1. Count Employees Number by Factory // => [ {name: 'BR1', count: 4}, ... ] */
+//根據Factory計算Employees Number
 function countEmployeesNumberByFactory() {
       var factoriesNumber = [];
       factories.forEach(element => {
@@ -19,6 +20,7 @@ console.log(countEmployeesNumberByFactory());
 
 console.log("2.");
 /* 2. Count Factories Number by Employee // => [ {employee: 'John', count: 2}, ... ] */
+//根據Employee計算Factories Number
 function countFactoriesNumberByEmployee() {
       var factoriesNumber = [];
       var found = 0;
@@ -48,6 +50,7 @@ console.log(countFactoriesNumberByEmployee());
 
 console.log("3.");
 /* 3. Order employees list by alphabetical order // =>   { name: "BR2", employees: ["Jessie", "John", "Karen"] }*/
+//將employees list排序
 function orderEmployeesList() {
       var factoriesNumber = [];
       factories.forEach(element => {
@@ -60,9 +63,9 @@ function orderEmployeesList() {
 console.log(orderEmployeesList());
 
 const employeeType = [
-      {id: 1, "name": "FullTime", work_begin: "09:20:00", work_end: "17:30:00"},
+      {id: 1, "name": "FullTime", work_begin: "09:00:00", work_end: "17:00:00"},
       {id: 2, "name": "MidTime", work_begin: "12:00:00", work_end: "21:00:00"},
-      {id: 3, "name": "HalfTime", work_begin: "20:00:00", work_end: "00:00:00"},
+      {id: 3, "name": "HalfTime", work_begin: "20:00:00", work_end: "00:00:00"}
 ];
 
 const employees = [
@@ -94,6 +97,7 @@ const tasks = [
 
 console.log("4.");
 /* 4. Count total hours worked in 1 day ? // => 39 */
+//所有員工一天工作多久
 function totalHours() {
       var work_hours = 0;
       employeeType.forEach(element => {
@@ -105,7 +109,7 @@ function totalHours() {
             而秒數影響不大，故不列入。
             而計算方式根據開始時間比較大或是開始時間比較小而有區分，若開始時間較大代表有跨日，故需要特別處理。
             */
-            if (parseInt(begin_time[0]) <= parseInt(end_time[0])) {
+            if (begin_time <= end_time) {
                   /*
                   沒有跨日的情況下：
                   假設begin => h1:m1:s1, end => h2:m2:s2
@@ -128,6 +132,7 @@ console.log(totalHours());
 
 console.log("5.");
 /* 5. Make a function that take as parameters dayTime and return number of employee working // howManyEmployeeByTime(time) => int */
+// 尋找employee裡的type對應到employeeType的工作時間為何
 function getWorkTime(inputType) {
       var result = {};
       employeeType.forEach(type => {
@@ -138,28 +143,48 @@ function getWorkTime(inputType) {
       return result;
 }
 
+//確認inputTime是合法的
+function checkTime(inputTime) {
+      var time = inputTime.split(':');
+      if ((parseInt(time[0]) >= 0) && (parseInt(time[0]) <= 23)) {
+            if ((parseInt(time[1]) >= 0) && (parseInt(time[1]) <= 59)) {
+                  if ((parseInt(time[2]) >= 0) && (parseInt(time[2]) <= 59)) {
+                        return true;
+                  }
+            }
+      }
+      return false;
+}
+
+//這個時間點有多少人在工作
 function howManyEmployeeByTime(time) {
-      var number = 0; //這個時間點有多少人在工作
+      if (!checkTime(time))
+            return "Invalid input time";
+      var number = 0; //正在工作的人數
       employees.forEach(employee => {
-            // 尋找employee裡的type對應到employeeType的工作時間為何
             var work_time = getWorkTime(employee['type']);
             /*
             沒有跨日 => begin_time <= time <= end_time 代表正在工作
             有跨日 => begin_time <= time <= "23:59:59" OR "00:00:00" <= time <= end_time 代表正在工作
             */
-            if (work_time['begin_time'] <= work_time['end_time'])
-                  if ((time >= work_time['begin_time']) && (time <= work_time['end_time']))
+            if (work_time['begin_time'] <= work_time['end_time']) {
+                  if ((time >= work_time['begin_time']) && (time <= work_time['end_time'])) {
                         number++;
-            else
-                  if ((time >= work_time['begin_time'] && time <= "23:59:59") || (time <= work_time['end_time'] && time >= "00:00:00"))
+                  }
+            }
+            else {
+                  if ((time >= work_time['begin_time'] && time <= "23:59:59") || (time <= work_time['end_time'] && time >= "00:00:00")) {
                         number++;
+                  }
+            }      
       });
       return number;
 }
-console.log(howManyEmployeeByTime("00:00:00"));
+console.log(howManyEmployeeByTime("23:59:59"));
 
 console.log("6.");
 /* 6. How many days of work needed to done all tasks ? // => 1 day = 9:00 to 00:00 between 00:00 and 09:00 doesnt count. */
+//幾天能完成所有task
 function howManyDaysToDoneAllTasks() {
       const minute = (24 - 9) * 60; //一天 = 幾分鐘
       var totalMinute = 0; // 總共花費幾分鐘
